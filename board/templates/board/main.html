@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+    <style>
+        .title-style {
+            text-decoration-thickness: 5px;
+            text-decoration-color: black;
+            text-decoration-line: none;
+        }
+    </style>
+</head>
+<body>
+<nav >
+    <a href="/">
+        홈으로
+    </a>
+</nav>
+<h1>게시판 페이지</h1>
+{% for post in posts %}
+    <hr/>
+    <h2><a href="{{ post.get_absolute_url }}" class="title-style">
+        {{ post.title }}</a></h2>
+    <h4>{{ post.created_at }}</h4>
+{% endfor %}
+</body>
+</html>
