@@ -14,12 +14,22 @@
 </head>
 <title>전적 검색 결과</title>
 <body>
+<nav>
+    <a href="/">
+        홈으로
+    </a>
+</nav>
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
             <form method="GET" name="search_form" action="/search/result/">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="유저 이름" name="search_text">
+                    {% if player_name %}
+                        <input type="text" class="form-control" placeholder="유저 이름을 입력해 주세요" name="search_text"
+                        value="{{ player_name }}">
+                    {% else %}
+                        <input type="text" class="form-control" placeholder="유저 이름을 입력해 주세요" name="search_text">
+                    {% endif %}
                     <span class="input-group-btn">
                           <button class="btn btn-secondary" type="submit">검색</button>
                     </span>
