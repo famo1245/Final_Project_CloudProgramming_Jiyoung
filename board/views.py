@@ -1,14 +1,14 @@
 from django.shortcuts import render
-from .models import Post
+from .models import Post, Category
 
 
 def landing(request):
-    posts = Post.objects.all().order_by('-pk')
+    post_list = Post.objects.all().order_by('-pk')
 
     return render(request,
                   'board/main.html',
                   {
-                      'posts': posts,
+                      'post_list': post_list,
                   })
 
 
@@ -18,4 +18,16 @@ def detail(request, pk):
                   'board/post_detail.html',
                   {
                       'post': post,
+                  })
+
+
+def category_page(request, slug):
+    category = Category.objects.get(slug=slug)
+    post_list = Post.objects.filter(category=category).order_by('-pk')
+
+    return render(request,
+                  'board/main.html',
+                  {
+                      'category': category,
+                      'post_list': post_list,
                   })

@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>게시판</title>
+    <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
     <style>
         .title-style {
             text-decoration-thickness: 5px;
-            text-decoration-color: black;
+            color: black;
             text-decoration-line: none;
         }
     </style>
@@ -17,12 +18,15 @@
         홈으로
     </a>
 </nav>
-<h1>게시판 페이지</h1>
-{% for post in posts %}
+{% if category %}
+    <h1>{{ category }} 게시판</h1>
+{% else %}
+    <h1>게시판 페이지</h1>
+{% endif %}
+{% for post in post_list %}
     <hr/>
     <h2><a href="{{ post.get_absolute_url }}" class="title-style">
-        {{ post.title }}</a></h2>
-    <h4>{{ post.created_at }}</h4>
+        {{ post.title }} - {{ post.created_at }}</a></h2>
 {% endfor %}
 </body>
 </html>

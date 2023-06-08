@@ -3,10 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>듀오 할까연</title>
+    <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+            integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
+            integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+            crossorigin="anonymous"></script>
+    <style>
+        .title-style {
+            text-decoration-thickness: 5px;
+            color: black;
+            text-decoration-line: none;
+        }
+    </style>
 </head>
 <body>
-<h1>홈페이지</h1>
-<a href="/board/">게시판</a>
-<a href="/search/">전적 검색</a>
+<h1>&nbsp;홈페이지</h1>
+<hr/>
+&nbsp;
+{% for category in categories %}
+    <a href="/board/{{ category.slug }}" class="title-style">{{ category }} 게시판</a>
+    &nbsp;
+{% endfor %}
+<a href="/search/" class="title-style">전적 검색</a>
 </body>
 </html>

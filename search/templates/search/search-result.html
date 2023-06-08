@@ -41,8 +41,14 @@
 <hr/>
 {% if player_exist %}
     <div>
-        <h3>{{ player_info.nickname }}</h3>
-        <h3>{{ player_info.level }}</h3>
+        <h3>닉네임: {{ player_info.nickname }}</h3>
+        <h3>레벨: {{ player_info.level }}</h3>
+        {% if player_info.division %}
+            <h3>최고 등급: {{ player_info.division }}</h3>
+        {% else %}
+            <h3>최고 등급 정보 없음</h3>
+        {% endif %}
+
     </div>
 {% else %}
     <div>
