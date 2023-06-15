@@ -2,7 +2,8 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('', views.landing),
-    path('<int:pk>/', views.detail),
-    path('<str:slug>/', views.category_page)
+    path('', views.PostList.as_view()),
+    path('<int:pk>/', views.PostDetail.as_view()),
+    path('<str:slug>/', views.CategoryList.as_view()),
+
 ]
