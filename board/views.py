@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView, CreateView, ListView, UpdateView
-from .models import Post, Category
+from .models import Post, Category, Comment
 from .forms import CommentForm
 
 
@@ -72,3 +72,14 @@ def add_comment(request, pk):
         return redirect(post.get_absolute_url())
     else:
         raise PermissionError
+
+
+class CommentUpdate(LoginRequiredMixin, UpdateView):
+    model = Comment
+    form_class = CommentForm
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user == self.get_object().author:
+            return super(CommentUpdate, self).dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionError
