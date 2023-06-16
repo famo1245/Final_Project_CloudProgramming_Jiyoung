@@ -3,12 +3,21 @@
 
 {% block main_area %}
     {% if user.is_authenticated %}
-        <a href="/board/create_post">글쓰기</a>
+        <div class="float-right">
+            <a role="button"
+               class="btn btn-sm btn-info"
+               href="/board/create_post">글쓰기
+            </a>
+        </div>
+        <br/>
     {% endif %}
     {% if category %}
         <h1>{{ category }} 게시판</h1>
     {% else %}
         <h1>게시판</h1>
+    {% endif %}
+    {% if search_info %}
+        <small class="text-muted">{{ search_info }}</small>
     {% endif %}
     {% for p in post_list %}
         <!-- Blog Post -->
@@ -20,7 +29,7 @@
                      src="https://product.cdn.cevaws.com/var/storage/images/_aliases/reference/media/feliway-2017/images/kor-kr/1_gnetb-7sfmbx49emluey4a/6341829-1-kor-KR/1_gNETb-7SfMBX49EMLUeY4A.jpg">
             {% endif %}
             <div class="card-body">
-                <h2 class="card-title">{{ p.title }} ({{ p.category }})</h2>
+                <h2 class="card-title">[{{ p.category }}]{{ p.title }}</h2>
                 <a href="{{ p.get_absolute_url }}" class="btn btn-primary">Read More &rarr;</a>
             </div>
             <div class="card-footer text-muted">

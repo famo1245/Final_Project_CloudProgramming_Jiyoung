@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'search',
 
     'crispy_forms',
-    'crispy_bootstrap4'
+    'crispy_bootstrap4',
 ]
 
 MIDDLEWARE = [
