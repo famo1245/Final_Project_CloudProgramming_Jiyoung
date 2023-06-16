@@ -164,3 +164,6 @@ migrations/
 
 # Secret keys
 secret.json
+
+# Media directory
+_media/

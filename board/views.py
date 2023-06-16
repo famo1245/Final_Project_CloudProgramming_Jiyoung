@@ -1,5 +1,6 @@
-from django.shortcuts import render
-from django.views.generic import DetailView, CreateView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect
+from django.views.generic import DetailView, CreateView, ListView, UpdateView
 from .models import Post, Category
 from .forms import CommentForm
 
@@ -9,9 +10,30 @@ class PostList(ListView):
     ordering = '-pk'
 
 
-class PostCreate(CreateView):
+class PostUpdate(UpdateView):
     model = Post
     fields = ['title', 'content', 'head_image', 'category']
+
+    template_name = 'board/post_update.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and self.get_object().author == request.user:
+            return super(PostUpdate, self).dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionError
+
+
+class PostCreate(CreateView, LoginRequiredMixin):
+    model = Post
+    fields = ['title', 'content', 'head_image', 'category']
+
+    def form_valid(self, form):
+        current_user = self.request.user
+        if current_user.is_authenticated:
+            form.instance.author = current_user
+            return super(PostCreate, self).form_valid(form)
+        else:
+            return redirect('/')
 
 
 class PostDetail(DetailView):
@@ -26,23 +48,27 @@ class PostDetail(DetailView):
 
 class CategoryList(ListView):
     model = Post
-    ordering = '-pk'
 
     def get_context_data(self, **kwargs):
         context = super(CategoryList, self).get_context_data()
-        context['post_list'] = Post.objects.filter(category__slug=self.kwargs['slug'])
+        context['post_list'] = Post.objects.filter(category__slug=self.kwargs['slug']).order_by('-pk')
         context['category'] = Category.objects.get(slug=self.kwargs['slug'])
 
         return context
 
 
-def category_page(request, slug):
-    category = Category.objects.get(slug=slug)
-    post_list = Post.objects.filter(category=category).order_by('-pk')
+def add_comment(request, pk):
+    if not request.user.is_authenticated:
+        raise PermissionError
 
-    return render(request,
-                  'board/post_list.html',
-                  {
-                      'category': category,
-                      'post_list': post_list,
-                  })
+    if request.method == 'POST':
+        post = Post.objects.get(pk=pk)
+        comment_form = CommentForm(request.POST)
+        comment_temp = comment_form.save(commit=False)
+        comment_temp.post = post
+        comment_temp.author = request.user
+        comment_temp.save()
+
+        return redirect(post.get_absolute_url())
+    else:
+        raise PermissionError

@@ -1,32 +1,43 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>게시판</title>
-    <link href="https://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
-    <style>
-        .title-style {
-            text-decoration-thickness: 5px;
-            color: black;
-            text-decoration-line: none;
-        }
-    </style>
-</head>
-<body>
-<nav>
-    <a href="/">
-        홈으로
-    </a>
-</nav>
-{% if category %}
-    <h1>{{ category }} 게시판</h1>
-{% else %}
-    <h1>게시판 페이지</h1>
-{% endif %}
-{% for post in post_list %}
-    <hr/>
-    <h2><a href="{{ post.get_absolute_url }}" class="title-style">
-        {{ post.title }} - {{ post.created_at }}</a></h2>
-{% endfor %}
-</body>
-</html>
+{% extends 'board/base.html' %}
+
+
+{% block main_area %}
+    {% if user.is_authenticated %}
+        <a href="/board/create_post">글쓰기</a>
+    {% endif %}
+    {% if category %}
+        <h1>{{ category }} 게시판</h1>
+    {% else %}
+        <h1>게시판</h1>
+    {% endif %}
+    {% for p in post_list %}
+        <!-- Blog Post -->
+        <div class="card mb-4">
+            {% if p.head_image %}
+                <img class="card-img-top" src="{{ p.head_image.url }}" alt="Card image cap">
+            {% else %}
+                <img class="card-img-top"
+                     src="https://product.cdn.cevaws.com/var/storage/images/_aliases/reference/media/feliway-2017/images/kor-kr/1_gnetb-7sfmbx49emluey4a/6341829-1-kor-KR/1_gNETb-7SfMBX49EMLUeY4A.jpg">
+            {% endif %}
+            <div class="card-body">
+                <h2 class="card-title">{{ p.title }} ({{ p.category }})</h2>
+                <a href="{{ p.get_absolute_url }}" class="btn btn-primary">Read More &rarr;</a>
+            </div>
+            <div class="card-footer text-muted">
+                Posted on {{ p.created_at }} by
+                <a href="#">{{ p.author }}</a>
+            </div>
+        </div>
+    {% endfor %}
+
+
+    <!-- Pagination -->
+    <ul class="pagination justify-content-center mb-4">
+        <li class="page-item">
+            <a class="page-link" href="#">&larr; Older</a>
+        </li>
+        <li class="page-item disabled">
+            <a class="page-link" href="#">Newer &rarr;</a>
+        </li>
+    </ul>
+{% endblock %}
