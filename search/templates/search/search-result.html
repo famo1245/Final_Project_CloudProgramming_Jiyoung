@@ -1,38 +1,47 @@
 {% extends 'search/base.html' %}
 {% block main_area %}
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            <form method="GET" name="search_form" action="/search/result/">
-                <div class="input-group">
-                    {% if player_name %}
-                        <input type="text" class="form-control" placeholder="유저 이름을 입력해 주세요" name="search_text"
-                        value="{{ player_name }}">
-                    {% else %}
-                        <input type="text" class="form-control" placeholder="유저 이름을 입력해 주세요" name="search_text">
-                    {% endif %}
-                    <span class="input-group-btn">
-                          <button class="btn btn-secondary" type="submit">검색</button>
+    <h1>유저 검색 결과</h1>
+    <br/>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <form method="GET" name="search_form" action="/search/result/">
+                    <div class="input-group">
+                        {% if player_name %}
+                            <input type="text" class="form-control" placeholder="유저 이름을 입력해 주세요" name="search_text"
+                                   value="{{ player_name }}">
+                        {% else %}
+                            <input type="text" class="form-control" placeholder="유저 이름을 입력해 주세요" name="search_text">
+                        {% endif %}
+                        <span class="input-group-btn">
+                          <button class="btn btn-primary" type="submit">검색</button>
                     </span>
-                </div>
-            </form>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-<hr/>
-{% if player_exist %}
-    <div>
-        <h3>닉네임: {{ player_info.nickname }}</h3>
-        <h3>레벨: {{ player_info.level }}</h3>
-        {% if player_info.division %}
-            <h3>최고 등급: {{ player_info.division }}</h3>
-        {% else %}
-            <h3>최고 등급 정보 없음</h3>
-        {% endif %}
-    </div>
-{% else %}
-    <div>
-    <h1>해당 닉네임의 플레이어가 없습니다</h1>
-    </div>
-{% endif %}
+    <hr/>
+    {% if player_exist %}
+        <table class="table table-striped">
+            <tbody>
+            <tr>
+                <td>닉네임</td>
+                <td>{{ player_info.nickname }}</td>
+            </tr>
+            <tr>
+                <td>레벨</td>
+                <td>{{ player_info.level }}</td>
+            </tr>
+            <tr>
+                <td>최고 등급</td>
+                <td>{{ player_info.division }}</td>
+            </tr>
+            </tbody>
+        </table>
+    {% else %}
+        <div>
+            <h1>해당 닉네임의 플레이어가 없습니다</h1>
+        </div>
+    {% endif %}
 {% endblock %}
