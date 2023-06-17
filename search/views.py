@@ -27,7 +27,9 @@ def result(request):
         if res_code == 200:
             response_body = response.read()
             player_result = json.loads(response_body.decode('utf-8'))
-            player_exist = True
+
+            if 'accessId' in player_result:
+                player_exist = True
 
             if player_exist:
                 player_info['nickname'] = player_result['nickname']
@@ -39,7 +41,7 @@ def result(request):
                 info_request.add_header("Authorization", api_key)
                 info_result = urllib.request.urlopen(info_request)
                 info_res = info_result.getcode()
-                player_info['division'] = '검색 결과 없음'
+                player_info['division'] = '랭크 정보 없음'
 
                 if info_res == 200:
                     info_body = info_result.read()
@@ -48,12 +50,11 @@ def result(request):
                         player_info['division'] = convert_division(info_result[0]['division'])
 
             return render(request, 'search/search-result.html',
-                            {
-                                'player_exist': player_exist,
-                                'player_info': player_info,
-                                'player_name': player_name
-                            })
-
+                          {
+                              'player_exist': player_exist,
+                              'player_info': player_info,
+                              'player_name': player_name
+                          })
     if not player_exist:
         return render(request, 'search/search-result.html',
                       {
