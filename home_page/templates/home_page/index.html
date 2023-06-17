@@ -1,5 +1,22 @@
 {% extends 'home_page/base.html' %}
 
 {% block main_area %}
-    <h1>메인 페이지</h1>
+    <h1>듀오 할까연</h1>
+    <hr>
+    <h3>최신글</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td>
+                듀오 게시판 최신글
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for post in duo_list %}
+
+        {% endfor %}
+
+        </tbody>
+    </table>
 {% endblock %}
