@@ -91,8 +91,8 @@ class PostSearch(PostList):
     def get_queryset(self):
         q = self.kwargs['q']
         post_list = Post.objects.filter(
-            Q(title__contains=q) | Q(content__contains=q)
-        ).distinct()
+            Q(title__contains=q) | Q(content__contains=q) | Q(author__username__contains=q)
+        ).distinct().order_by('-pk')
         return post_list
 
     def get_context_data(self, **kwargs):
