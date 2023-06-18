@@ -3,20 +3,131 @@
 {% block main_area %}
     <h1>듀오 할까연</h1>
     <hr>
-    <h3>최신글</h3>
+    <h4>듀오 게시판 최신글</h4>
     <table class="table table-striped">
         <thead>
         <tr>
             <td>
-                듀오 게시판 최신글
+                번호
+            </td>
+            <td>
+                제목
+            </td>
+            <td>
+                작성자
+            </td>
+            <td>
+                작성 일자
+                &nbsp;
+                <a href="/board/듀오/" class="float-right">
+                    <small class="text-muted">more...</small>
+                </a>
             </td>
         </tr>
         </thead>
         <tbody>
         {% for post in duo_list %}
-
+            <tr>
+                <td>
+                    {{ post.pk }}
+                </td>
+                <td>
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </td>
+                <td>
+                    {{ post.author }}
+                </td>
+                <td>
+                    {{ post.created_at }}
+                </td>
+            </tr>
         {% endfor %}
+        </tbody>
+    </table>
+    <br/>
 
+    <h4>스쿼드 게시판 최신글</h4>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td>
+                번호
+            </td>
+            <td>
+                제목
+            </td>
+            <td>
+                작성자
+            </td>
+            <td>
+                작성 일자
+                &nbsp;
+                <a href="/board/스쿼드/" class="float-right">
+                    <small class="text-muted">more...</small>
+                </a>
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for post in squad_list %}
+            <tr>
+                <td>
+                    {{ post.pk }}
+                </td>
+                <td>
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </td>
+                <td>
+                    {{ post.author }}
+                </td>
+                <td>
+                    {{ post.created_at }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br/>
+
+    <h4>자유 게시판 최신글</h4>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td>
+                번호
+            </td>
+            <td>
+                제목
+            </td>
+            <td>
+                작성자
+            </td>
+            <td>
+                작성 일자
+                &nbsp;
+                <a href="/board/자유/" class="float-right">
+                    <small class="text-muted">more...</small>
+                </a>
+            </td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for post in free_list %}
+            <tr>
+                <td>
+                    {{ post.pk }}
+                </td>
+                <td>
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </td>
+                <td>
+                    {{ post.author }}
+                </td>
+                <td>
+                    {{ post.created_at }}
+                </td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 {% endblock %}
